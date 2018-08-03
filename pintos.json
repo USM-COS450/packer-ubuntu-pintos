@@ -55,7 +55,17 @@
             ]
         ],
         "virtualbox_version_file": ".vbox_version",
-        "vm_name": "{{user `vm_name`}}"
+        "vm_name": "{{user `vm_name`}}",
+        "export_opts": [
+            "--manifest",
+            "--vsys",
+            "0",
+            "--description",
+            "{{user `vm_description`}}",
+            "--version",
+            "{{user `vm_version`}}"
+        ],
+        "format": "ova"
     }],
     "post-processors": [{
         "keep_input_artifact": true,
@@ -64,11 +74,6 @@
         "vagrantfile_template": "{{ user `vagrantfile_template` }}"
     }],
     "provisioners": [
-        {
-            "type": "file",
-            "destination": "/tmp/",
-            "source": "./bochs-2.2.6-bin-pintos.tar.gz"
-        },
         {
             "type": "shell",
             "environment_vars": [
@@ -86,15 +91,41 @@
             "scripts": [
                 "script/update.sh",
                 "script/pintos-user.sh",
-                "script/pintos-dev.sh",
                 "script/virtualbox.sh",
-                "script/motd.sh",
+                "script/motd.sh"
+            ]
+        },
+        {
+            "type": "file",
+            "destination": "{{user `bochs_precompiled_bin`}}",
+            "source": "./bochs-2.2.6-bin-pintos.tar.gz"
+        },
+        {
+            "type": "shell",
+            "environment_vars": [
+                "DESKTOP={{user `desktop`}}",
+                "UPDATE={{user `update`}}",
+                "INSTALL_SSH_KEY={{user `install_ssh_key`}}",
+                "SSH_USERNAME={{user `ssh_username`}}",
+                "SSH_PASSWORD={{user `ssh_password`}}",
+                "http_proxy={{user `http_proxy`}}",
+                "https_proxy={{user `https_proxy`}}",
+                "no_proxy={{user `no_proxy`}}",                
+                "PINTOS_GIT_URL={{user `pintos_git_url`}}",
+                "BOCHS_PRECOMPILED_BIN={{user `bochs_precompiled_bin`}}"
+            ],
+            "execute_command": "echo '{{ user `ssh_password` }}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+            "expect_disconnect": true,
+            "scripts": [
+                "script/pintos-dev.sh",
                 "script/minimize.sh",
                 "script/cleanup.sh"
             ]
         }
     ],
     "variables": {
+        "pintos_git_url": "https://github.com/USM-COS450/pintos.git",
+        "bochs_precompiled_bin": "/home/pintos/bochs-2.2.6-bin-pintos.tar.gz",
         "boot_command_prefix": "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
         "cpus": "1",
         "desktop": "false",
@@ -119,6 +150,8 @@
         "vagrantfile_template": "",
         "version": "0.1",
         "virtualbox_guest_os_type": "Ubuntu_64",
-        "vm_name": "ubuntu-18.04"
+        "vm_name": "ubuntu-pintos",
+        "vm_description": "Pintos Development",
+        "vm_version": "Fall 2018"
     }
 }
