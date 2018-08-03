@@ -63,30 +63,37 @@
         "type": "vagrant",
         "vagrantfile_template": "{{ user `vagrantfile_template` }}"
     }],
-    "provisioners": [{
-        "environment_vars": [
-            "DESKTOP={{user `desktop`}}",
-            "UPDATE={{user `update`}}",
-            "INSTALL_SSH_KEY={{user `install_ssh_key`}}",
-            "SSH_USERNAME={{user `ssh_username`}}",
-            "SSH_PASSWORD={{user `ssh_password`}}",
-            "http_proxy={{user `http_proxy`}}",
-            "https_proxy={{user `https_proxy`}}",
-            "no_proxy={{user `no_proxy`}}"
-        ],
-        "execute_command": "echo '{{ user `ssh_password` }}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
-        "expect_disconnect": true,
-        "scripts": [
-            "script/update.sh",
-            "script/pintos-user.sh",
-            "script/pintos-dev.sh",
-            "script/virtualbox.sh",
-            "script/motd.sh",
-            "script/minimize.sh",
-            "script/cleanup.sh"
-        ],
-        "type": "shell"
-    }],
+    "provisioners": [
+        {
+            "type": "file",
+            "destination": "/tmp/",
+            "source": "./bochs-2.2.6-bin-pintos.tar.gz"
+        },
+        {
+            "type": "shell",
+            "environment_vars": [
+                "DESKTOP={{user `desktop`}}",
+                "UPDATE={{user `update`}}",
+                "INSTALL_SSH_KEY={{user `install_ssh_key`}}",
+                "SSH_USERNAME={{user `ssh_username`}}",
+                "SSH_PASSWORD={{user `ssh_password`}}",
+                "http_proxy={{user `http_proxy`}}",
+                "https_proxy={{user `https_proxy`}}",
+                "no_proxy={{user `no_proxy`}}"
+            ],
+            "execute_command": "echo '{{ user `ssh_password` }}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+            "expect_disconnect": true,
+            "scripts": [
+                "script/update.sh",
+                "script/pintos-user.sh",
+                "script/pintos-dev.sh",
+                "script/virtualbox.sh",
+                "script/motd.sh",
+                "script/minimize.sh",
+                "script/cleanup.sh"
+            ]
+        }
+    ],
     "variables": {
         "boot_command_prefix": "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
         "cpus": "1",

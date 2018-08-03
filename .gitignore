@@ -9,3 +9,6 @@ iso/
 box/
 
 .DS_Store
+
+# Output folders
+output-*
