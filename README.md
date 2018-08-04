@@ -6,7 +6,7 @@ A packer [Packer](https://packer.io/) template to create a [Pintos](http://pinto
 
 ### USAGE
 
-    $ packer build pintos.json
+    $ packer build pintos-dev.json
 
 ## Vagrant
 
