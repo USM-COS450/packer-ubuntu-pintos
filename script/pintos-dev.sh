@@ -7,6 +7,11 @@ PINTOS_GIT=${PINTOS_GIT_URL:-https://github.com/USM-COS450/pintos.git}
 BOCHS_BIN_TARBALL=${BOCHS_PRECOMPILED_BIN:-$PINTOS_HOME/bochs-2.2.6-bin-pintos.tar.gz}
 BOCHS_SRC_URL=https://sourceforge.net/projects/bochs/files/bochs/2.2.6/bochs-2.2.6.tar.gz/download
 
+echo "==> Build and install Pintos utilities"
+cd $PINTOS_HOME
+git clone $PINTOS_GIT
+(cd pintos/src/utils && make install)
+
 echo "==> Install QEMU emulator"
 apt-get -y install qemu-system-x86 
 
@@ -28,8 +33,5 @@ else
 		$PINTOS_HOME/pintos/src/misc/bochs-2.2.6-build.sh
 fi
 
-echo "==> Build and install Pintos utilities"
-cd $PINTOS_HOME
-git clone $PINTOS_GIT
-(cd pintos/src/utils && make install)
+echo "==> Remove staging Pintos source"
 rm -rf pintos 

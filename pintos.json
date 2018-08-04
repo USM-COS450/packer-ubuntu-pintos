@@ -96,11 +96,6 @@
             ]
         },
         {
-            "type": "file",
-            "destination": "{{user `bochs_precompiled_bin`}}",
-            "source": "./bochs-2.2.6-bin-pintos.tar.gz"
-        },
-        {
             "type": "shell",
             "environment_vars": [
                 "DESKTOP={{user `desktop`}}",
@@ -150,7 +145,7 @@
         "vagrantfile_template": "",
         "version": "0.1",
         "virtualbox_guest_os_type": "Ubuntu_64",
-        "vm_name": "ubuntu-pintos",
+        "vm_name": "pintos-dev",
         "vm_description": "Pintos Development",
         "vm_version": "Fall 2018"
     }
