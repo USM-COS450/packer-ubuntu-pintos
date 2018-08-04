@@ -19,7 +19,7 @@ if [ -f $BOCHS_BIN_TARBALL ] ; then
 	rm -f $BOCHS_BIN_TARBALL
 else
 	echo "==> Build and install Bochs emulator"
-	apt-get -y install libx11-6-dev libxpm4-dev ncurses-dev
+	apt-get -y install xorg-dev ncurses-dev
 	cd $PINTOS_HOME
 	curl -O -J -L $BOCHS_SRC_URL
 	SRCDIR=$PINTOS_HOME \

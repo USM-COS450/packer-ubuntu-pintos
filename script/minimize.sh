@@ -26,26 +26,30 @@ dpkg --list | awk '{ print $2 }' | grep -- '-doc$' | xargs apt-get -y purge
 #dpkg --list | grep -i compiler | awk '{ print $2 }' | xargs apt-get -y purge
 #apt-get -y purge cpp gcc g++
 #apt-get -y purge build-essential git
-#echo "==> Removing default system Ruby"
-#apt-get -y purge ruby ri doc
-#echo "==> Removing default system Python"
-#apt-get -y purge python-dbus libnl1 python-smartpm python-twisted-core libiw30 python-twisted-bin libdbus-glib-1-2 python-pexpect python-pycurl python-serial python-gobject python-pam python-openssl libffi5
-echo "==> Removing X11 libraries"
-apt-get -y purge libx11-data xauth libxmuu1 libxcb1 libx11-6 libxext6
+echo "==> Removing default system Ruby"
+apt-get -y purge ruby ri doc
+echo "==> Removing default system Python"
+apt-get -y purge python-dbus libnl1 python-smartpm python-twisted-core libiw30 python-twisted-bin libdbus-glib-1-2 python-pexpect python-pycurl python-serial python-gobject python-pam python-openssl libffi5
+#echo "==> Removing X11 libraries"
+#apt-get -y purge libx11-data xauth libxmuu1 libxcb1 libx11-6 libxext6
+#apt-get -y purge xauth libxmuu1 libxext6
 echo "==> Removing other oddities"
 apt-get -y purge popularity-contest installation-report landscape-common wireless-tools wpasupplicant ubuntu-serverguide
 apt-get -y purge nano
 
 # Clean up the apt cache
+echo "==> Clean up apt cache"
 apt-get -y autoremove --purge
 apt-get -y clean
 
 # Clean up orphaned packages with deborphan
+echo "==> Clean up orphaned packages"
 apt-get -y install deborphan
-while [ -n "$(deborphan --guess-all --libdevel)" ]; do
-    deborphan --guess-all --libdevel | xargs apt-get -y purge
-done
-apt-get -y purge deborphan dialog
+# while [ -n "$(deborphan --guess-all --libdevel)" ]; do
+#     # But not needed X11 packages for bochs
+#     deborphan --guess-all --libdevel -e libxpm4,libx11-6,libx11-data,libxcb1,libxdmcp,libxau6 | xargs apt-get -y purge
+# done
+# apt-get -y purge deborphan dialog
 
 echo "==> Removing man pages"
 rm -rf /usr/share/man/*
