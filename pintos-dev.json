@@ -93,10 +93,10 @@
             "expect_disconnect": true,
             "scripts": [
                 "script/update.sh",
-                "script/virtualbox.sh",
-                "script/motd.sh",
                 "script/pintos-user.sh",
                 "script/cos450-dev.sh",
+                "script/virtualbox.sh",
+                "script/motd.sh",
                 "script/minimize.sh",
                 "script/cleanup.sh"
             ]

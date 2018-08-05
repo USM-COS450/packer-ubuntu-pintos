@@ -14,3 +14,11 @@ printf '\n' >> ${MOTD_FILE}
 printf '%2s%-30s%30s\n' " " "${PLATFORM_MSG}" "${BUILT_MSG}" >> ${MOTD_FILE}
 printf '%0.1s' "-"{1..64} >> ${MOTD_FILE}
 printf '\n' >> ${MOTD_FILE}
+
+echo "==> Customizing login prompt"
+IFACE=`cat /proc/net/dev | tail +3 | grep -v lo: | cut -d: -f1`
+cat >> /etc/issue << EOF
+IP \4{${IFACE}} ($IFACE)
+
+EOF
+
