@@ -12,7 +12,7 @@ mkdir -p ${COS450_HOME}
 cd ${COS450_HOME}
 
 echo "==> Build and install Pintos utilities"
-git clone $PINTOS_GIT ./pintos
+git clone -b cos450 --single-branch $PINTOS_GIT ./pintos
 (cd pintos/src/utils && make DSTDIR=${COS450_HOME} install )
 
 echo "==> Install QEMU emulator"
@@ -23,7 +23,7 @@ apt-get -y install qemu-system-x86 xorg-dev ncurses-dev
 #apt-get -y install libx11-6 libxpm4 
 
 echo "==> Build and install Bochs emulator"
-curl -L $BOCHS_SRC_URL bochs-2.2.6.tar.gz
+curl -L -o bochs-2.2.6.tar.gz $BOCHS_SRC_URL
 SRCDIR=$COS450_HOME \
 	PINTOSDIR=$COS450_HOME/pintos \
 	DSTDIR=${COS450_HOME} \
