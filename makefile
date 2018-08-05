@@ -7,5 +7,4 @@ dist/pintos-dev.ova: pintos-dev.json
 	packer build pintos-dev.json
 
 clean:
-	-rm -rf box
-	-rm -rf output-pintos-dev-virtualbox-iso
+	-rm -rf dist
