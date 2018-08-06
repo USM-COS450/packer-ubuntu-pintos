@@ -21,4 +21,8 @@ if [[ $PACKER_BUILDER_TYPE =~ virtualbox ]]; then
     if [[ $VBOX_VERSION = "5.1.10" ]]; then
         rm /sbin/mount.vboxsf && ln -s /usr/lib/VBoxGuestAdditions/mount.vboxsf /sbin/mount.vboxsf
     fi
+
+    # Add ssh user to the VirtualBox shared folder group.
+    # So they get permission to shared folders!
+    /usr/sbin/usermod -a -G vboxsf ${SSH_USER}
 fi

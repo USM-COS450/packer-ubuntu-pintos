@@ -15,7 +15,7 @@ if [ "$INSTALL_SSH_KEY" = "true" ] || [ "$INSTALL_SSH_KEY" = "1" ]; then
         echo "==> Creating $SSH_USER user"
         /usr/sbin/groupadd $SSH_USER
         # Add user to vboxsf for virtualbox shared folders
-        /usr/sbin/useradd $SSH_USER -g $SSH_USER -G sudo,vboxsf -d $SSH_USER_HOME --create-home
+        /usr/sbin/useradd $SSH_USER -g $SSH_USER -G sudo -d $SSH_USER_HOME --create-home
         echo "${SSH_USER}:${SSH_PASS}" | chpasswd
     fi
 
