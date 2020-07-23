@@ -68,3 +68,9 @@ $ vagrant box add --name pintos-dev ./box
 $ vagrant init pintos-dev
 $ vagrant up
 ```
+
+
+## NOTES
+
+Bochs build needs ==> virtualbox-iso: ../../cpu/../bochs.h:307:64: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+
